@@ -3,9 +3,22 @@ const { initializeApp } = require('firebase/app');
 
 // Firebase-Admin
 const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccountKey.json');
 
 const config = require('../utils/config');
+
+const serviceAccount = {
+  type: config.firebase.type,
+  project_id: config.firebase.projectId,
+  private_key_id: config.firebase.privateKeyId,
+  private_key: config.firebase.privateKey.replace(/\\n/g, '\n'), // Mengganti \\n dengan \n
+  client_email: config.firebase.clientEmail,
+  client_id: config.firebase.clientId,
+  auth_uri: config.firebase.authUri,
+  token_uri: config.firebase.tokenUri,
+  auth_provider_x509_cert_url: config.firebase.authProvider,
+  client_x509_cert_url: config.firebase.clientCert,
+  universe_domain: config.firebase.universeDomain,
+};
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
