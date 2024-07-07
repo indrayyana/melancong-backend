@@ -13,12 +13,12 @@ router.get('/', (req, res) => {
 
 const defaultRoutes = [
   {
-    path: '/user',
-    route: userRoute,
-  },
-  {
     path: '/auth',
     route: authRoute,
+  },
+  {
+    path: '/users',
+    route: userRoute,
   },
 ];
 

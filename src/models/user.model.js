@@ -56,6 +56,8 @@ const createData = async (collectionName, data, id = null) => {
 const updateData = async (collectionName, docId, data) => {
   const docRef = db.collection(collectionName).doc(docId);
   await docRef.update(data);
+
+  return data;
 };
 
 const deleteData = async (collectionName, docId) => {

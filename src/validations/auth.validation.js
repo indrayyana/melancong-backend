@@ -19,7 +19,15 @@ const userRegist = {
   ]),
 };
 
+const userResetPassword = {
+  query: createSchema([]),
+  body: createSchema([
+    { name: 'email', type: Joi.string().email({ tlds: true }).required() },
+  ]),
+};
+
 module.exports = {
   userRegist,
   userLogin,
+  userResetPassword,
 };

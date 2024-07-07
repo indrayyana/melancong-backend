@@ -27,6 +27,9 @@ const userRegister = async (data) => {
     if (error.code === 'auth/email-already-in-use') {
       throw new Error('Email already in use');
     }
+    if (error.code === 'auth/network-request-failed') {
+      throw new Error('Network error - please check your connection and try again.');
+    }
 
     throw error;
   }
@@ -46,6 +49,9 @@ const userLogin = async (data) => {
     if (error.code === 'auth/invalid-credential') {
       throw new Error('Incorrect email or password');
     }
+    if (error.code === 'auth/network-request-failed') {
+      throw new Error('Network error - please check your connection and try again.');
+    }
 
     throw error;
   }
@@ -59,6 +65,9 @@ const userResetPassword = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
   } catch (error) {
+    if (error.code === 'auth/network-request-failed') {
+      throw new Error('Network error - please check your connection and try again.');
+    }
     if (error.code === 'auth/user-not-found') {
       throw new Error('No user found with this email');
     }
