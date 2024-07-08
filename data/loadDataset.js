@@ -3,6 +3,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable arrow-body-style */
 
+const path = require('path');
 const fs = require('fs');
 const csv = require('csv-parser');
 
@@ -11,7 +12,8 @@ let results = [];
 const loadDataset = async () => {
   return new Promise((resolve, reject) => {
     const newResults = [];
-    fs.createReadStream('./data/dataset.csv')
+    const datasetPath = path.resolve(__dirname, 'dataset.csv');
+    fs.createReadStream(datasetPath)
       .pipe(csv())
       .on('data', (data) => newResults.push(data))
       .on('end', () => {
