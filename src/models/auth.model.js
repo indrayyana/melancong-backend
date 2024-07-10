@@ -7,7 +7,7 @@ const {
   sendPasswordResetEmail,
 } = require('firebase/auth');
 
-const { deleteToken } = require('./token.model');
+const { deleteToken, deleteAllTokens } = require('./token.model');
 
 const auth = getAuth();
 
@@ -43,6 +43,8 @@ const userLogin = async (data) => {
     if (!user.emailVerified) {
       throw new Error('Please verify your email before login.');
     }
+
+    await deleteAllTokens(user.uid);
 
     return user;
   } catch (error) {

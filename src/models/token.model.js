@@ -22,6 +22,18 @@ const deleteToken = async (docId, token) => {
   await docRef.delete();
 };
 
+const deleteAllTokens = async (docId) => {
+  const tokensRef = db.collection('users').doc(docId).collection('tokens');
+  const snapshot = await tokensRef.get();
+
+  const batch = db.batch();
+  snapshot.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+
+  await batch.commit();
+};
+
 const isTokenValid = async (docId, token) => {
   const docRef = db.collection('users').doc(docId).collection('tokens').doc(token);
   const doc = await docRef.get();
@@ -32,5 +44,6 @@ const isTokenValid = async (docId, token) => {
 module.exports = {
   addToken,
   deleteToken,
+  deleteAllTokens,
   isTokenValid,
 };
