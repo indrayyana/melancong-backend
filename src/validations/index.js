@@ -10,6 +10,8 @@ const defaultMessages = (label) => ({
   'string.email': `${label} tidak valid`,
   'string.min': `${label} harus memiliki panjang minimal {#limit} karakter`,
   'string.max': `${label} harus memiliki panjang maksimal {#limit} karakter`,
+  'number.min': `${label} harus lebih besar dari atau sama dengan {#limit}`,
+  'number.max': `${label} harus lebih kecil dari atau sama dengan {#limit}`,
   'any.only': `${label} tidak valid`,
   'any.unknown': `${label} tidak diizinkan`, // bug
 });

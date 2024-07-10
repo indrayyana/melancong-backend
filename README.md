@@ -13,3 +13,6 @@
 |   /users/delete               | DELETE |                                   -                                            | Delete profile from user                          |  &#9745;  |
 |   /destinations               |   GET  |                                   -                                            | Show all destinations                             |  &#9745;  |
 |/destinations/detail/`{dataId}`|   GET  |                                   -                                            | Show the detail destinations                      |  &#9745;  |
+|   /destinations/saved         |   GET  |                                   -                                            | Show all saved destinations                       |  &#9745;  |
+|   /destinations/add           |  POST  |                                  id                                            | Add destination to saved                          |  &#9745;  |
+|   /destinations/delete        | DELETE |                                  id                                            | Add destination to saved                          |  &#9745;  |

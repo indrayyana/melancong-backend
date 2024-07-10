@@ -10,6 +10,22 @@ const queryDestination = {
   body: createSchema([]),
 };
 
+const idDestination = {
+  query: createSchema([]),
+  body: createSchema([
+    { name: 'id', type: Joi.number().min(1).max(45) },
+  ]),
+};
+
+const querySaved = {
+  query: createSchema([
+    { name: 'd', type: Joi.string() },
+  ]),
+  body: createSchema([]),
+};
+
 module.exports = {
   queryDestination,
+  idDestination,
+  querySaved,
 };
