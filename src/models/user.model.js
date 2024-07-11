@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const { db, admin } = require('../config/firebase');
 const { deleteToken } = require('./token.model');
 
@@ -81,6 +82,67 @@ const deleteData = async (collectionName, docId) => {
   });
 };
 
+const uploadFile = async (userId, file) => {
+  const bucket = admin.storage().bucket();
+
+  if (!file) {
+    throw new Error('No file uploaded');
+  }
+
+  const validMimeTypes = [
+    'image/apng',
+    'image/avif',
+    'image/gif',
+    'image/jpeg',
+    'image/png',
+    'image/svg+xml',
+    'image/webp',
+  ];
+
+  if (!validMimeTypes.includes(file.mimetype)) {
+    throw new Error('Invalid file type');
+  }
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error('File size exceeds the maximum limit of 5MB');
+  }
+
+  const downloadToken = uuidv4();
+
+  const metadata = {
+    metadata: {
+      firebaseStorageDownloadTokens: downloadToken,
+    },
+    contentType: file.mimetype,
+    cacheControl: 'public, max-age=31536000',
+  };
+
+  const blob = bucket.file(userId);
+  const blobStream = blob.createWriteStream({
+    metadata,
+    gzip: true,
+  });
+
+  return new Promise((resolve, reject) => {
+    /* eslint-disable no-unused-vars */
+    blobStream.on('error', (err) => {
+      reject(new Error('Unable to upload image'));
+    });
+
+    blobStream.on('finish', async () => {
+      try {
+        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(blob.name)}?alt=media&token=${downloadToken}`;
+        resolve(imageUrl);
+      } catch (err) {
+        reject(err);
+      }
+    });
+
+    blobStream.end(file.buffer);
+  });
+};
+
 const findDataByEmail = async (email) => {
   const snapshot = await db.collection('users').where('email', '==', email).get();
 
@@ -103,5 +165,6 @@ module.exports = {
   createData,
   updateData,
   deleteData,
+  uploadFile,
   findDataByEmail,
 };

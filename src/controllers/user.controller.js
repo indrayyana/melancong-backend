@@ -68,9 +68,27 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const uploadProfileImage = async (req, res) => {
+  try {
+    const imageUrl = await userModel.uploadFile(req.id, req.file);
+
+    return res.status(httpStatus.CREATED).send({
+      status: httpStatus.CREATED,
+      message: 'Upload file successfully',
+      data: imageUrl,
+    });
+  } catch (error) {
+    return res.status(httpStatus.BAD_REQUEST).send({
+      status: httpStatus.BAD_REQUEST,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   getUsers,
   getUser,
   updateUser,
   deleteUser,
+  uploadProfileImage,
 };
