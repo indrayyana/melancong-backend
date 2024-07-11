@@ -2,6 +2,7 @@ const express = require('express');
 const userRoute = require('./user.route');
 const authRoute = require('./auth.route');
 const destinationRoute = require('./destination.route');
+const chatbotRoute = require('./chatbot.route');
 
 const router = express.Router();
 
@@ -24,6 +25,10 @@ const defaultRoutes = [
   {
     path: '/destinations',
     route: destinationRoute,
+  },
+  {
+    path: '/ai',
+    route: chatbotRoute,
   },
 ];
 

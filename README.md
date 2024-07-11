@@ -11,8 +11,10 @@
 |   /users/profile              |   GET  |                                   -                                            | Show the detail data from user                    |  &#9745;  |
 |   /users/update               |   PUT  |`Anything you want to edit from:` name, gender                                  | Edit profile from user                            |  &#9745;  |
 |   /users/delete               | DELETE |                                   -                                            | Delete profile from user                          |  &#9745;  |
+|   /users/upload-image         |  POST  |                                image                                           | Upload profile image from user                    |  &#9745;  |
 |   /destinations               |   GET  |                                   -                                            | Show all destinations                             |  &#9745;  |
 |/destinations/detail/`{dataId}`|   GET  |                                   -                                            | Show the detail destinations                      |  &#9745;  |
 |   /destinations/saved         |   GET  |                                   -                                            | Show all saved destinations                       |  &#9745;  |
 |   /destinations/add           |  POST  |                                  id                                            | Add destination to saved                          |  &#9745;  |
 |   /destinations/delete        | DELETE |                                  id                                            | Add destination to saved                          |  &#9745;  |
+|   /ai/chatbot                 |  POST  |                                prompt                                          | Ask travel tips/question for chatbot              |  &#9745;  |
