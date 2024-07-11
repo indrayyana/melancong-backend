@@ -133,6 +133,11 @@ const uploadFile = async (userId, file) => {
     blobStream.on('finish', async () => {
       try {
         const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(blob.name)}?alt=media&token=${downloadToken}`;
+
+        await updateData('users', userId, {
+          imageLink: imageUrl,
+        });
+
         resolve(imageUrl);
       } catch (err) {
         reject(err);
