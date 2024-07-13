@@ -1,19 +1,18 @@
 const Joi = require('joi');
 
-// Objek pesan kesalahan default
 const defaultMessages = (label) => ({
-  'string.base': `${label} harus berupa teks`,
-  'string.empty': `${label} tidak boleh kosong`,
-  'any.required': `Field ${label} harus diisi`,
-  'number.base': `${label} harus berupa angka`,
-  'number.positive': `${label} harus berupa angka positif`,
-  'string.email': `${label} tidak valid`,
-  'string.min': `${label} harus memiliki panjang minimal {#limit} karakter`,
-  'string.max': `${label} harus memiliki panjang maksimal {#limit} karakter`,
-  'number.min': `${label} harus lebih besar dari atau sama dengan {#limit}`,
-  'number.max': `${label} harus lebih kecil dari atau sama dengan {#limit}`,
-  'any.only': `${label} tidak valid`,
-  'any.unknown': `${label} tidak diizinkan`, // bug
+  'string.base': `${label} must be text`,
+  'string.empty': `${label} can not be empty`,
+  'any.required': `Field ${label} must be filled`,
+  'number.base': `${label} must be a number`,
+  'number.positive': `${label} must be a positive number`,
+  'string.email': `invalid ${label}`,
+  'string.min': `${label} must have a minimum length of {#limit} characters`,
+  'string.max': `${label} must have a maximum length of {#limit} characters`,
+  'number.min': `${label} must be greater than or equal to {#limit}`,
+  'number.max': `${label} must be less than or equal to {#limit}`,
+  'any.only': `invalid ${label}`,
+  'any.unknown': `${label} is not allowed`, // bug
 });
 
 const createSchema = (properties) => Joi.object().keys(

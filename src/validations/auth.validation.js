@@ -3,7 +3,7 @@ const { password } = require('./custom.validation');
 const { createSchema } = require('.');
 
 const userLogin = {
-  query: createSchema([]), // No query allowed
+  query: createSchema([]),
   body: createSchema([
     { name: 'email', type: Joi.string().email({ tlds: true }).required() },
     { name: 'password', type: Joi.string().custom(password).required() },

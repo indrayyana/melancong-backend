@@ -69,13 +69,13 @@ const deleteData = async (collectionName, docId) => {
     throw new Error(`${collectionName} not found`);
   }
 
-  // Hapus user dari Firestore
+  // Delete user from Firestore
   await docRef.delete();
 
-  // Hapus email user dari Firebase Authentication
+  // Delete user email from Firebase Authentication
   await admin.auth().deleteUser(docId);
 
-  // Hapus semua token user
+  // Delete all user token
   const tokens = await db.collection('users').doc(docId).collection('tokens').get();
   tokens.forEach(async (tokenDoc) => {
     await deleteToken(docId, tokenDoc.id);

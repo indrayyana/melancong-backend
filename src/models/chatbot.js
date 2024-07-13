@@ -1,6 +1,5 @@
 /* eslint-disable quote-props */
 /* eslint-disable object-shorthand */
-/* eslint-disable no-useless-escape */
 /* eslint-disable no-restricted-syntax */
 const { VertexAI } = require('@google-cloud/vertexai');
 

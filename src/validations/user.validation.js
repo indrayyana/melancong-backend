@@ -5,8 +5,8 @@ const updateUser = {
   query: createSchema([]),
   body: createSchema([
     { name: 'name', type: Joi.string() },
-    { name: 'gender', type: Joi.string().valid('L', 'P') },
-    // TODO: Adjust to user data
+    { name: 'gender', type: Joi.string().valid('Male', 'Female') },
+    { name: 'phone', type: Joi.string() },
   ]),
 };
 
