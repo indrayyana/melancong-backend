@@ -27,7 +27,7 @@ const defaultRoutes = [
     route: destinationRoute,
   },
   {
-    path: '/ai',
+    path: '/chatbot',
     route: chatbotRoute,
   },
 ];

@@ -17,4 +17,4 @@
 |   /destinations/saved         |   GET  |                                   -                                            | Show all saved destinations                       |  &#9745;  |
 |   /destinations/add           |  POST  |                                  id                                            | Add destination to saved                          |  &#9745;  |
 |   /destinations/delete        | DELETE |                                  id                                            | Delete saved destination                          |  &#9745;  |
-|   /ai/chatbot                 |  POST  |                                prompt                                          | Ask travel tips/question for chatbot              |  &#9745;  |
+|   /chatbot                    |  POST  |                                prompt                                          | Ask travel tips/question for chatbot              |  &#9745;  |

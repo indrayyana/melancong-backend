@@ -6,6 +6,6 @@ const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.post('/chatbot', auth, validate(chatbotValidation.promptChatbot), chatbotController.recommendation);
+router.post('/', auth, validate(chatbotValidation.promptChatbot), chatbotController.recommendation);
 
 module.exports = router;

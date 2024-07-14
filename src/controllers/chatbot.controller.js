@@ -12,7 +12,7 @@ const recommendation = async (req, res) => {
   } catch (error) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: 'An error occurred while giving response',
+      message: error.message,
     });
   }
 };
