@@ -1,29 +1,35 @@
 const { db, admin } = require('../config/firebase');
 
-const addToken = async (docId, token) => {
-  const docRef = db.collection('users').doc(docId).collection('tokens');
-  const newDocRef = docRef.doc(token);
+const addToken = async (userId, token) => {
+  const docRef = db.collection('tokens').doc();
 
   const newData = {
+    token,
+    userId,
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
   };
 
-  await newDocRef.set(newData);
+  await docRef.set(newData);
 };
 
-const deleteToken = async (docId, token) => {
-  const docRef = db.collection('users').doc(docId).collection('tokens').doc(token);
-  const doc = await docRef.get();
+const deleteToken = async (userId, token) => {
+  const querySnapshot = await db.collection('tokens')
+    .where('userId', '==', userId)
+    .where('token', '==', token)
+    .limit(1)
+    .get();
 
-  if (!doc.exists) {
+  if (querySnapshot.empty) {
     throw new Error('token not found');
   }
 
-  await docRef.delete();
+  // Delete found documents
+  const docId = querySnapshot.docs[0].id;
+  await db.collection('tokens').doc(docId).delete();
 };
 
-const deleteAllTokens = async (docId) => {
-  const tokensRef = db.collection('users').doc(docId).collection('tokens');
+const deleteAllTokens = async (userId) => {
+  const tokensRef = db.collection('tokens').where('userId', '==', userId);
   const snapshot = await tokensRef.get();
 
   const batch = db.batch();
@@ -34,11 +40,18 @@ const deleteAllTokens = async (docId) => {
   await batch.commit();
 };
 
-const isTokenValid = async (docId, token) => {
-  const docRef = db.collection('users').doc(docId).collection('tokens').doc(token);
-  const doc = await docRef.get();
+const isTokenValid = async (userId, token) => {
+  const querySnapshot = await db.collection('tokens')
+    .where('userId', '==', userId)
+    .where('token', '==', token)
+    .limit(1)
+    .get();
 
-  return doc.exists;
+  if (querySnapshot.empty) {
+    return false;
+  }
+
+  return true;
 };
 
 module.exports = {

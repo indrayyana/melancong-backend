@@ -1,13 +1,14 @@
 const { db } = require('../config/firebase');
 const { readSingleData } = require('../../data/loadDataset');
 
-const readDataDestinations = async (docId, name = '') => {
-  const snapshot = await db.collection('users').doc(docId).collection('destinations').get();
+const readDataDestinations = async (userId, name = '') => {
+  const snapshot = await db.collection('destinations').where('userId', '==', userId).get();
   let data = [];
 
   snapshot.forEach((doc) => {
     data.push({
       id: doc.id,
+      userId: doc.data().userId,
       name: doc.data().name,
       regency: doc.data().regency,
       category: doc.data().category,
@@ -29,23 +30,29 @@ const readDataDestinations = async (docId, name = '') => {
 };
 
 const saveDestination = async (userId, destinationId) => {
-  const docRef = db.collection('users').doc(userId).collection('destinations');
+  const docRef = db.collection('destinations');
 
   const data = await readSingleData(destinationId);
+  data.userId = userId;
+
   await docRef.doc(data.id).set(data);
 
   return data.id;
 };
 
 const deleteDestination = async (userId, destinationId) => {
-  const docRef = db.collection('users').doc(userId).collection('destinations').doc(destinationId);
-  const doc = await docRef.get();
+  const snapshot = await db.collection('destinations')
+    .where('userId', '==', userId)
+    .where('id', '==', destinationId)
+    .limit(1)
+    .get();
 
-  if (!doc.exists) {
+  if (snapshot.empty) {
     throw new Error('Destination not found');
   }
 
-  await docRef.delete();
+  const docId = snapshot.docs[0].id;
+  await db.collection('destinations').doc(docId).delete();
 };
 
 module.exports = {

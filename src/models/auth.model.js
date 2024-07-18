@@ -59,8 +59,8 @@ const userLogin = async (data) => {
   }
 };
 
-const userLogout = async (docId, token) => {
-  await deleteToken(docId, token);
+const userLogout = async (userId, token) => {
+  await deleteToken(userId, token);
 };
 
 const userResetPassword = async (email) => {

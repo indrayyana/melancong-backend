@@ -1,4 +1,4 @@
-## API URL : [melancong-be.vercel.app](https://melancong-be.vercel.app/)
+## API URL : [https://melacong-api-bij5xtwena-et.a.run.app](https://melacong-api-bij5xtwena-et.a.run.app)
 ## API Endpoints
 |             Endpoint          | Method |                                      Body                                      |                     Description                   | JWT Token |
 | :---------------------------: | :----: | :----------------------------------------------------------------------------: | :-----------------------------------------------: | :-------: |
@@ -18,3 +18,17 @@
 |   /destinations/add           |  POST  |                                  id                                            | Add destination to saved                          |  &#9745;  |
 |   /destinations/delete        | DELETE |                                  id                                            | Delete saved destination                          |  &#9745;  |
 |   /chatbot                    |  POST  |                                prompt                                          | Ask travel tips/question for chatbot              |  &#9745;  |
+
+## Firebase | Cloud Firestore
+![Melancong_DB](https://github.com/user-attachments/assets/7f4405fc-470e-4290-8482-5caa11b6dcf6)
+
+## Deploy API to Cloud Run
+```console
+docker build -t gcr.io/melanc0ng/backend:tag .
+```
+```console
+docker push gcr.io/melanc0ng/backend:tag
+```
+```console
+gcloud run deploy melacong-api --image gcr.io/melanc0ng/backend:tag --platform managed
+```

@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { db, admin } = require('../config/firebase');
-const { deleteToken } = require('./token.model');
+const { deleteAllTokens } = require('./token.model');
 
 const readAllData = async (collectionName, name, page = 1, limit = 10) => {
   const snapshot = await db.collection(collectionName).get();
@@ -75,11 +75,8 @@ const deleteData = async (collectionName, docId) => {
   // Delete user email from Firebase Authentication
   await admin.auth().deleteUser(docId);
 
-  // Delete all user token
-  const tokens = await db.collection('users').doc(docId).collection('tokens').get();
-  tokens.forEach(async (tokenDoc) => {
-    await deleteToken(docId, tokenDoc.id);
-  });
+  // Delete all user tokens
+  await deleteAllTokens(docId);
 };
 
 const uploadFile = async (userId, file) => {
