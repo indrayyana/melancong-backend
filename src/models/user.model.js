@@ -70,6 +70,9 @@ export const deleteData = async (collectionName, docId) => {
     throw new Error(`${collectionName} not found`);
   }
 
+  // Get user image link from Firestore
+  const imageLink = doc.data().imageLink;
+
   // Delete user from Firestore
   await docRef.delete();
 
@@ -79,6 +82,12 @@ export const deleteData = async (collectionName, docId) => {
   // Delete all user tokens & destinations
   await deleteAllTokens(docId);
   await deleteAllDestination(docId);
+
+  // Delete user image from Firebase Storage
+  if (imageLink) {
+    const bucket = admin.storage().bucket();
+    await bucket.file(docId).delete();
+  }
 };
 
 export const uploadFile = async (userId, file) => {
