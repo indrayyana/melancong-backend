@@ -1,8 +1,9 @@
-const express = require('express');
-const userRoute = require('./user.route');
-const authRoute = require('./auth.route');
-const destinationRoute = require('./destination.route');
-const chatbotRoute = require('./chatbot.route');
+import express from 'express';
+
+import userRoute from './user.route.js';
+import authRoute from './auth.route.js';
+import destinationRoute from './destination.route.js';
+import chatbotRoute from './chatbot.route.js';
 
 const router = express.Router();
 
@@ -36,4 +37,4 @@ defaultRoutes.forEach((route) => {
   router.use(route.path, route.route);
 });
 
-module.exports = router;
+export default router;

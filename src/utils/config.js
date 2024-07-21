@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const config = {
   app: {
     host: process.env.HOST,
@@ -27,4 +31,4 @@ const config = {
   },
 };
 
-module.exports = config;
+export default config;

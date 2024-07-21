@@ -1,4 +1,11 @@
-module.exports.authModel = require('./auth.model');
-module.exports.tokenModel = require('./token.model');
-module.exports.userModel = require('./user.model');
-module.exports.destinationModel = require('./destination.model');
+import * as authModel from './auth.model.js';
+import * as tokenModel from './token.model.js';
+import * as userModel from './user.model.js';
+import * as destinationModel from './destination.model.js';
+
+export {
+  authModel,
+  tokenModel,
+  userModel,
+  destinationModel,
+};

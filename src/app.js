@@ -1,14 +1,12 @@
-require('dotenv').config();
-
-const express = require('express');
-const helmet = require('helmet');
-const cors = require('cors');
-const httpStatus = require('http-status');
-const config = require('./src/utils/config');
-const { authLimiter } = require('./src/middlewares/rateLimiter');
-const routes = require('./src/routes/index');
-const { errorHandler } = require('./src/middlewares/error');
-const ApiError = require('./src/utils/ApiError');
+import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import httpStatus from 'http-status';
+import config from './utils/config.js';
+import routes from './routes/index.js';
+import ApiError from './utils/ApiError.js';
+import { errorHandler } from './middlewares/error.js';
+import { rateLimiter } from './middlewares/rateLimiter.js';
 
 const app = express();
 
@@ -26,7 +24,7 @@ app.use(cors());
 app.options('*', cors());
 
 // limit repeated failed requests to auth endpoints
-app.use('/auth', authLimiter);
+app.use('/auth', rateLimiter);
 
 // API routes
 app.use(routes);

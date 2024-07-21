@@ -1,7 +1,7 @@
-const httpStatus = require('http-status');
-const { userModel } = require('../models');
+import httpStatus from 'http-status';
+import { userModel } from '../models/index.js';
 
-const getUsers = async (req, res) => {
+export const getUsers = async (req, res) => {
   try {
     const doc = await userModel.readAllData('users', req.query.name, req.query.page, req.query.limit);
 
@@ -18,7 +18,7 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getUser = async (req, res) => {
+export const getUser = async (req, res) => {
   try {
     const doc = await userModel.readSingleData('users', req.id);
 
@@ -35,7 +35,7 @@ const getUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const user = await userModel.updateData('users', req.id, req.body);
 
@@ -52,7 +52,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     await userModel.deleteData('users', req.id);
 
@@ -68,7 +68,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const uploadProfileImage = async (req, res) => {
+export const uploadProfileImage = async (req, res) => {
   try {
     const imageUrl = await userModel.uploadFile(req.id, req.file);
 
@@ -83,12 +83,4 @@ const uploadProfileImage = async (req, res) => {
       message: error.message,
     });
   }
-};
-
-module.exports = {
-  getUsers,
-  getUser,
-  updateUser,
-  deleteUser,
-  uploadProfileImage,
 };

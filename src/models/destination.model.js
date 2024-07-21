@@ -1,7 +1,7 @@
-const { db } = require('../config/firebase');
-const { readSingleData } = require('../../data/loadDataset');
+import { db } from '../config/firebase.js';
+import { readSingleData } from '../../data/loadDataset.js';
 
-const readDataDestinations = async (userId, name = '') => {
+export const readDataDestinations = async (userId, name = '') => {
   const snapshot = await db.collection('destinations').where('userId', '==', userId).get();
   let data = [];
 
@@ -29,7 +29,7 @@ const readDataDestinations = async (userId, name = '') => {
   return data;
 };
 
-const saveDestination = async (userId, destinationId) => {
+export const saveDestination = async (userId, destinationId) => {
   const docRef = db.collection('destinations');
 
   const data = await readSingleData(destinationId);
@@ -40,7 +40,7 @@ const saveDestination = async (userId, destinationId) => {
   return data.id;
 };
 
-const deleteDestination = async (userId, destinationId) => {
+export const deleteDestination = async (userId, destinationId) => {
   const snapshot = await db.collection('destinations')
     .where('userId', '==', userId)
     .where('id', '==', destinationId)
@@ -55,8 +55,14 @@ const deleteDestination = async (userId, destinationId) => {
   await db.collection('destinations').doc(docId).delete();
 };
 
-module.exports = {
-  saveDestination,
-  readDataDestinations,
-  deleteDestination,
+export const deleteAllDestination = async (userId) => {
+  const tokensRef = db.collection('destinations').where('userId', '==', userId);
+  const snapshot = await tokensRef.get();
+
+  const batch = db.batch();
+  snapshot.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+
+  await batch.commit();
 };

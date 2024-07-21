@@ -1,4 +1,4 @@
-const objectId = (value, helpers) => {
+export const objectId = (value, helpers) => {
   if (!value.match(/^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi)) {
     return helpers.message('Invalid id');
   }
@@ -6,7 +6,7 @@ const objectId = (value, helpers) => {
   return value;
 };
 
-const password = (value, helpers) => {
+export const password = (value, helpers) => {
   if (value.length < 6) {
     return helpers.message('Password must be at least 6 characters');
   }
@@ -16,9 +16,4 @@ const password = (value, helpers) => {
   }
 
   return value;
-};
-
-module.exports = {
-  objectId,
-  password,
 };

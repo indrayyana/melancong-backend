@@ -1,8 +1,9 @@
-const { v4: uuidv4 } = require('uuid');
-const { db, admin } = require('../config/firebase');
-const { deleteAllTokens } = require('./token.model');
+import { v4 as uuidv4 } from 'uuid';
+import { db, admin } from '../config/firebase.js';
+import { deleteAllTokens } from './token.model.js';
+import { deleteAllDestination } from './destination.model.js';
 
-const readAllData = async (collectionName, name, page = 1, limit = 10) => {
+export const readAllData = async (collectionName, name, page = 1, limit = 10) => {
   const snapshot = await db.collection(collectionName).get();
   let data = [];
 
@@ -29,7 +30,7 @@ const readAllData = async (collectionName, name, page = 1, limit = 10) => {
   };
 };
 
-const readSingleData = async (collectionName, docId) => {
+export const readSingleData = async (collectionName, docId) => {
   const docRef = db.collection(collectionName).doc(docId);
   const doc = await docRef.get();
 
@@ -40,7 +41,7 @@ const readSingleData = async (collectionName, docId) => {
   return { id: doc.id, ...doc.data() };
 };
 
-const createData = async (collectionName, data, id = null) => {
+export const createData = async (collectionName, data, id = null) => {
   let docRef;
 
   if (id) {
@@ -54,14 +55,14 @@ const createData = async (collectionName, data, id = null) => {
   return docRef.id;
 };
 
-const updateData = async (collectionName, docId, data) => {
+export const updateData = async (collectionName, docId, data) => {
   const docRef = db.collection(collectionName).doc(docId);
   await docRef.update(data);
 
   return data;
 };
 
-const deleteData = async (collectionName, docId) => {
+export const deleteData = async (collectionName, docId) => {
   const docRef = db.collection(collectionName).doc(docId);
   const doc = await docRef.get();
 
@@ -75,11 +76,12 @@ const deleteData = async (collectionName, docId) => {
   // Delete user email from Firebase Authentication
   await admin.auth().deleteUser(docId);
 
-  // Delete all user tokens
+  // Delete all user tokens & destinations
   await deleteAllTokens(docId);
+  await deleteAllDestination(docId);
 };
 
-const uploadFile = async (userId, file) => {
+export const uploadFile = async (userId, file) => {
   const bucket = admin.storage().bucket();
 
   if (!file) {
@@ -145,7 +147,7 @@ const uploadFile = async (userId, file) => {
   });
 };
 
-const findDataByEmail = async (email) => {
+export const findDataByEmail = async (email) => {
   const snapshot = await db.collection('users').where('email', '==', email).get();
 
   if (snapshot.empty) {
@@ -159,14 +161,4 @@ const findDataByEmail = async (email) => {
   });
 
   return user;
-};
-
-module.exports = {
-  readAllData,
-  readSingleData,
-  createData,
-  updateData,
-  deleteData,
-  uploadFile,
-  findDataByEmail,
 };

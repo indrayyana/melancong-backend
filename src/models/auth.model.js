@@ -1,17 +1,17 @@
-const {
+import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
   sendPasswordResetEmail,
-} = require('firebase/auth');
+} from 'firebase/auth';
 
-const { deleteToken, deleteAllTokens } = require('./token.model');
+import { deleteToken, deleteAllTokens } from './token.model.js';
 
 const auth = getAuth();
 
-const userRegister = async (data) => {
+export const userRegister = async (data) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
     const user = userCredential.user;
@@ -35,7 +35,7 @@ const userRegister = async (data) => {
   }
 };
 
-const userLogin = async (data) => {
+export const userLogin = async (data) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
     const user = userCredential.user;
@@ -59,11 +59,11 @@ const userLogin = async (data) => {
   }
 };
 
-const userLogout = async (userId, token) => {
+export const userLogout = async (userId, token) => {
   await deleteToken(userId, token);
 };
 
-const userResetPassword = async (email) => {
+export const userResetPassword = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
   } catch (error) {
@@ -76,11 +76,4 @@ const userResetPassword = async (email) => {
 
     throw error;
   }
-};
-
-module.exports = {
-  userRegister,
-  userLogin,
-  userLogout,
-  userResetPassword,
 };

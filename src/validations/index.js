@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const defaultMessages = (label) => ({
   'string.base': `${label} must be text`,
@@ -15,10 +15,8 @@ const defaultMessages = (label) => ({
   'any.unknown': `${label} is not allowed`, // bug
 });
 
-const createSchema = (properties) => Joi.object().keys(
+export const createSchema = (properties) => Joi.object().keys(
   Object.fromEntries(properties.map(({ name, type }) => [
     name, type.messages(defaultMessages(name)),
   ])),
 );
-
-module.exports = { createSchema };

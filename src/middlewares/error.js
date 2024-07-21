@@ -1,8 +1,8 @@
-const httpStatus = require('http-status');
-const ApiError = require('../utils/ApiError');
+import httpStatus from 'http-status';
+import ApiError from '../utils/ApiError.js';
 
 /* eslint-disable no-unused-vars */
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
   let { statusCode, message } = err;
 
   if (!(err instanceof ApiError)) {
@@ -15,5 +15,3 @@ const errorHandler = (err, req, res, next) => {
     message,
   });
 };
-
-module.exports = { errorHandler };

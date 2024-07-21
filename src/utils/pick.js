@@ -7,4 +7,4 @@ const pick = (object, keys) => keys.reduce((obj, key) => {
   return obj;
 }, {});
 
-module.exports = pick;
+export default pick;

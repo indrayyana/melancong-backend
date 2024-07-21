@@ -1,10 +1,10 @@
-const express = require('express');
-const multer = require('multer');
-const validate = require('../middlewares/validate');
-const userValidation = require('../validations/user.validation');
-const userController = require('../controllers/user.controller');
-const auth = require('../middlewares/auth');
-const { admin } = require('../middlewares/admin');
+import express from 'express';
+import multer from 'multer';
+import auth from '../middlewares/auth.js';
+import admin from '../middlewares/admin.js';
+import validate from '../middlewares/validate.js';
+import * as userValidation from '../validations/user.validation.js';
+import * as userController from '../controllers/user.controller.js';
 
 // Set up multer for handling file uploads
 const storage = multer.memoryStorage();
@@ -18,4 +18,4 @@ router.put('/update', auth, validate(userValidation.updateUser), userController.
 router.delete('/delete', auth, userController.deleteUser);
 router.post('/upload-image', auth, upload.single('image'), userController.uploadProfileImage);
 
-module.exports = router;
+export default router;

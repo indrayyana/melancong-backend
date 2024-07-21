@@ -1,8 +1,8 @@
-const Joi = require('joi');
-const { password } = require('./custom.validation');
-const { createSchema } = require('.');
+import Joi from 'joi';
+import { password } from './custom.validation.js';
+import { createSchema } from './index.js';
 
-const userLogin = {
+export const userLogin = {
   query: createSchema([]),
   body: createSchema([
     { name: 'email', type: Joi.string().email({ tlds: true }).required() },
@@ -10,7 +10,7 @@ const userLogin = {
   ]),
 };
 
-const userRegist = {
+export const userRegist = {
   query: createSchema([]),
   body: createSchema([
     { name: 'email', type: Joi.string().email({ tlds: true }).required() },
@@ -19,15 +19,9 @@ const userRegist = {
   ]),
 };
 
-const userResetPassword = {
+export const userResetPassword = {
   query: createSchema([]),
   body: createSchema([
     { name: 'email', type: Joi.string().email({ tlds: true }).required() },
   ]),
-};
-
-module.exports = {
-  userRegist,
-  userLogin,
-  userResetPassword,
 };

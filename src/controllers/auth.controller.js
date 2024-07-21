@@ -1,7 +1,7 @@
-const httpStatus = require('http-status');
-const jwt = require('jsonwebtoken');
-const config = require('../utils/config');
-const { tokenModel, userModel, authModel } = require('../models');
+import httpStatus from 'http-status';
+import jwt from 'jsonwebtoken';
+import config from '../utils/config.js';
+import { tokenModel, userModel, authModel } from '../models/index.js';
 
 const signToken = async (id, name, email, emailVerified) => {
   const token = jwt.sign({
@@ -13,7 +13,7 @@ const signToken = async (id, name, email, emailVerified) => {
   return token;
 };
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const userExist = await userModel.findDataByEmail(req.body.email);
 
@@ -42,7 +42,7 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const user = await authModel.userLogin(req.body);
     const userExist = await userModel.findDataByEmail(req.body.email);
@@ -76,7 +76,7 @@ const login = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {
+export const logout = async (req, res) => {
   try {
     await authModel.userLogout(req.id, req.token);
 
@@ -92,7 +92,7 @@ const logout = async (req, res) => {
   }
 };
 
-const resetPassword = async (req, res) => {
+export const resetPassword = async (req, res) => {
   try {
     const userExist = await userModel.findDataByEmail(req.body.email);
 
@@ -115,11 +115,4 @@ const resetPassword = async (req, res) => {
       message: error.message,
     });
   }
-};
-
-module.exports = {
-  register,
-  login,
-  logout,
-  resetPassword,
 };

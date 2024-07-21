@@ -1,6 +1,6 @@
-const { db, admin } = require('../config/firebase');
+import { db, admin } from '../config/firebase.js';
 
-const addToken = async (userId, token) => {
+export const addToken = async (userId, token) => {
   const docRef = db.collection('tokens').doc();
 
   const newData = {
@@ -12,7 +12,7 @@ const addToken = async (userId, token) => {
   await docRef.set(newData);
 };
 
-const deleteToken = async (userId, token) => {
+export const deleteToken = async (userId, token) => {
   const querySnapshot = await db.collection('tokens')
     .where('userId', '==', userId)
     .where('token', '==', token)
@@ -28,7 +28,7 @@ const deleteToken = async (userId, token) => {
   await db.collection('tokens').doc(docId).delete();
 };
 
-const deleteAllTokens = async (userId) => {
+export const deleteAllTokens = async (userId) => {
   const tokensRef = db.collection('tokens').where('userId', '==', userId);
   const snapshot = await tokensRef.get();
 
@@ -40,7 +40,7 @@ const deleteAllTokens = async (userId) => {
   await batch.commit();
 };
 
-const isTokenValid = async (userId, token) => {
+export const isTokenValid = async (userId, token) => {
   const querySnapshot = await db.collection('tokens')
     .where('userId', '==', userId)
     .where('token', '==', token)
@@ -52,11 +52,4 @@ const isTokenValid = async (userId, token) => {
   }
 
   return true;
-};
-
-module.exports = {
-  addToken,
-  deleteToken,
-  deleteAllTokens,
-  isTokenValid,
 };

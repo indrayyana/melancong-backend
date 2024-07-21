@@ -1,13 +1,9 @@
-const Joi = require('joi');
-const { createSchema } = require('.');
+import Joi from 'joi';
+import { createSchema } from './index.js';
 
-const promptChatbot = {
+export const promptChatbot = {
   query: createSchema([]),
   body: createSchema([
     { name: 'prompt', type: Joi.string().required() },
   ]),
-};
-
-module.exports = {
-  promptChatbot,
 };

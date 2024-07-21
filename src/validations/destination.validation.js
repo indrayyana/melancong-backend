@@ -1,7 +1,7 @@
-const Joi = require('joi');
-const { createSchema } = require('.');
+import Joi from 'joi';
+import { createSchema } from './index.js';
 
-const queryDestination = {
+export const queryDestination = {
   query: createSchema([
     { name: 'd', type: Joi.string() },
     { name: 'r', type: Joi.string() },
@@ -10,22 +10,16 @@ const queryDestination = {
   body: createSchema([]),
 };
 
-const idDestination = {
+export const idDestination = {
   query: createSchema([]),
   body: createSchema([
     { name: 'id', type: Joi.number().min(1).max(45) },
   ]),
 };
 
-const querySaved = {
+export const querySaved = {
   query: createSchema([
     { name: 'd', type: Joi.string() },
   ]),
   body: createSchema([]),
-};
-
-module.exports = {
-  queryDestination,
-  idDestination,
-  querySaved,
 };

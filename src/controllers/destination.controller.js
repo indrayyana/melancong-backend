@@ -1,11 +1,8 @@
-const httpStatus = require('http-status');
-const { destinationModel } = require('../models');
-const {
-  readDataset,
-  readSingleData,
-} = require('../../data/loadDataset');
+import httpStatus from 'http-status';
+import { destinationModel } from '../models/index.js';
+import { readDataset, readSingleData } from '../../data/loadDataset.js';
 
-const getDataset = async (req, res) => {
+export const getDataset = async (req, res) => {
   try {
     const data = await readDataset(req.query.d, req.query.r, req.query.c);
 
@@ -22,7 +19,7 @@ const getDataset = async (req, res) => {
   }
 };
 
-const getDetailDataset = async (req, res) => {
+export const getDetailDataset = async (req, res) => {
   try {
     const data = await readSingleData(parseInt(req.params.dataId, 10));
 
@@ -39,7 +36,7 @@ const getDetailDataset = async (req, res) => {
   }
 };
 
-const getDestinations = async (req, res) => {
+export const getDestinations = async (req, res) => {
   try {
     const data = await destinationModel.readDataDestinations(req.id, req.query.d);
 
@@ -56,7 +53,7 @@ const getDestinations = async (req, res) => {
   }
 };
 
-const saveDestinationToFavorite = async (req, res) => {
+export const saveDestinationToFavorite = async (req, res) => {
   try {
     const data = await destinationModel.saveDestination(req.id, req.body.id);
 
@@ -73,7 +70,7 @@ const saveDestinationToFavorite = async (req, res) => {
   }
 };
 
-const deleteSavedDestination = async (req, res) => {
+export const deleteSavedDestination = async (req, res) => {
   try {
     await destinationModel.deleteDestination(req.id, req.body.id.toString());
 
@@ -87,12 +84,4 @@ const deleteSavedDestination = async (req, res) => {
       message: error.message,
     });
   }
-};
-
-module.exports = {
-  getDataset,
-  getDetailDataset,
-  getDestinations,
-  saveDestinationToFavorite,
-  deleteSavedDestination,
 };

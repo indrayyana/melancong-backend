@@ -1,11 +1,12 @@
-/* eslint-disable radix */
 /* eslint-disable dot-notation */
-/* eslint-disable no-unused-vars */
-/* eslint-disable arrow-body-style */
 
-const path = require('path');
-const fs = require('fs');
-const csv = require('csv-parser');
+import path from 'path';
+import fs from 'fs';
+import csv from 'csv-parser';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let results = [];
 
@@ -35,7 +36,7 @@ const loadDataset = async () => {
   }
 })();
 
-const readDataset = async (name, regency, category) => {
+export const readDataset = async (name, regency, category) => {
   // Check if dataset is already loaded
   if (results.length === 0) {
     await loadDataset();
@@ -73,7 +74,7 @@ const readDataset = async (name, regency, category) => {
   };
 };
 
-const readSingleData = async (id) => {
+export const readSingleData = async (id) => {
   if (results.length === 0) {
     await loadDataset();
   }
@@ -96,9 +97,4 @@ const readSingleData = async (id) => {
     imageLink: item['Image Link'],
     information: item['Information'],
   };
-};
-
-module.exports = {
-  readDataset,
-  readSingleData,
 };

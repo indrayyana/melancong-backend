@@ -1,7 +1,6 @@
-const httpStatus = require('http-status');
-const { readSingleData } = require('../models/user.model');
+import httpStatus from 'http-status';
+import { readSingleData } from '../models/user.model.js';
 
-/* eslint-disable arrow-body-style */
 const admin = async (req, res, next) => {
   const user = await readSingleData('users', req.id);
 
@@ -15,4 +14,4 @@ const admin = async (req, res, next) => {
   return next();
 };
 
-module.exports = { admin };
+export default admin;

@@ -1,8 +1,8 @@
-const httpStatus = require('http-status');
-const jwt = require('jsonwebtoken');
-const config = require('../utils/config');
-const { readSingleData } = require('../models/user.model');
-const { isTokenValid } = require('../models/token.model');
+import httpStatus from 'http-status';
+import jwt from 'jsonwebtoken';
+import config from '../utils/config.js';
+import { readSingleData } from '../models/user.model.js';
+import { isTokenValid } from '../models/token.model.js';
 
 const sendUnauthorizedResponse = (res, message) => {
   res.status(httpStatus.UNAUTHORIZED).send({
@@ -46,4 +46,4 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = auth;
+export default auth;

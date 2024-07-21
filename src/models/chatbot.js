@@ -1,14 +1,14 @@
 /* eslint-disable quote-props */
 /* eslint-disable object-shorthand */
 /* eslint-disable no-restricted-syntax */
-const { VertexAI } = require('@google-cloud/vertexai');
+import { VertexAI } from '@google-cloud/vertexai';
 
 // Initialize Vertex with your Cloud project and location
-const vertex_ai = new VertexAI({ project: 'melanc0ng', location: 'asia-southeast1' });
+const vertexAi = new VertexAI({ project: 'melanc0ng', location: 'asia-southeast1' });
 const model = 'gemini-1.5-flash-001';
 
 // Instantiate the models
-const generativeModel = vertex_ai.preview.getGenerativeModel({
+const generativeModel = vertexAi.preview.getGenerativeModel({
   model: model,
   generationConfig: {
     'maxOutputTokens': 8192,
@@ -35,7 +35,7 @@ const generativeModel = vertex_ai.preview.getGenerativeModel({
   ],
 });
 
-const giveRecommend = async (prompt) => {
+export const giveRecommend = async (prompt) => {
   const text1 = {
     text: `You are a chatbot for a website offering travel tips and information about Bali. Provide specific and detailed travel tips based on the user's query.
 
@@ -69,8 +69,4 @@ const giveRecommend = async (prompt) => {
     .trim();
 
   return cleanResponse;
-};
-
-module.exports = {
-  giveRecommend,
 };

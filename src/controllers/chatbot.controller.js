@@ -1,7 +1,7 @@
-const httpStatus = require('http-status');
-const { giveRecommend } = require('../models/chatbot');
+import httpStatus from 'http-status';
+import { giveRecommend } from '../models/chatbot.js';
 
-const recommendation = async (req, res) => {
+export const recommendation = async (req, res) => {
   try {
     const response = await giveRecommend(req.body.prompt);
 
@@ -15,8 +15,4 @@ const recommendation = async (req, res) => {
       message: error.message,
     });
   }
-};
-
-module.exports = {
-  recommendation,
 };

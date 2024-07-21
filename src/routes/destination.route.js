@@ -1,8 +1,8 @@
-const express = require('express');
-const validate = require('../middlewares/validate');
-const destinationValidation = require('../validations/destination.validation');
-const destinationController = require('../controllers/destination.controller');
-const auth = require('../middlewares/auth');
+import express from 'express';
+import auth from '../middlewares/auth.js';
+import validate from '../middlewares/validate.js';
+import * as destinationValidation from '../validations/destination.validation.js';
+import * as destinationController from '../controllers/destination.controller.js';
 
 const router = express.Router();
 
@@ -12,4 +12,4 @@ router.get('/saved', auth, validate(destinationValidation.querySaved), destinati
 router.post('/add', auth, validate(destinationValidation.idDestination), destinationController.saveDestinationToFavorite);
 router.delete('/delete', auth, validate(destinationValidation.idDestination), destinationController.deleteSavedDestination);
 
-module.exports = router;
+export default router;

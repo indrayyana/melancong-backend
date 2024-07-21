@@ -1,10 +1,9 @@
 // Firebase
-const { initializeApp } = require('firebase/app');
+import { initializeApp } from 'firebase/app';
 
 // Firebase-Admin
-const admin = require('firebase-admin');
-
-const config = require('../utils/config');
+import admin from 'firebase-admin';
+import config from '../utils/config.js';
 
 const serviceAccount = {
   type: config.firebase.type,
@@ -25,7 +24,8 @@ admin.initializeApp({
   storageBucket: 'gs://melanc0ng.appspot.com',
 });
 
-const db = admin.firestore();
+export const db = admin.firestore();
+export { admin };
 
 // Firebase SDK
 const firebaseConfig = {
@@ -37,6 +37,4 @@ const firebaseConfig = {
   appId: config.firebase.appId,
 };
 
-const app = initializeApp(firebaseConfig);
-
-module.exports = { db, admin, app };
+export const app = initializeApp(firebaseConfig);
