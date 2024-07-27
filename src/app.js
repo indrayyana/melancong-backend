@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import httpStatus from 'http-status';
+import { region } from 'firebase-functions';
 import config from './utils/config.js';
 import routes from './routes/index.js';
 import ApiError from './utils/ApiError.js';
@@ -41,3 +42,5 @@ const PORT = config.app.port || 3000;
 app.listen(PORT, config.app.host, () => {
   console.log(`App listening on http://${config.app.host}:${config.app.port}`);
 });
+
+export const api = region('asia-southeast2').https.onRequest(app);

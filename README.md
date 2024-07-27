@@ -1,4 +1,4 @@
-## API URL : [https://melacong-api-bij5xtwena-et.a.run.app](https://melacong-api-bij5xtwena-et.a.run.app)
+## API URL : [https://asia-southeast2-melanc0ng.cloudfunctions.net/api](https://asia-southeast2-melanc0ng.cloudfunctions.net/api)
 ## API Endpoints
 |             Endpoint          | Method |                                      Body                                      |                     Description                   | JWT Token |
 | :---------------------------: | :----: | :----------------------------------------------------------------------------: | :-----------------------------------------------: | :-------: |
@@ -21,6 +21,17 @@
 
 ## Firebase | Cloud Firestore
 ![Melancong_DB](https://github.com/user-attachments/assets/7f4405fc-470e-4290-8482-5caa11b6dcf6)
+
+## Deploy to Firebase Functions
+```console
+npm install -g firebase-tools
+```
+```console
+firebase init
+```
+```console
+npm run deploy
+```
 
 ## Deploy API to Cloud Run
 ```console

@@ -4,8 +4,8 @@ dotenv.config();
 
 const config = {
   app: {
-    host: process.env.HOST,
-    port: process.env.PORT,
+    host: process.env.APP_HOST,
+    port: process.env.APP_PORT,
   },
   jwt: {
     secret: process.env.JWT_SECRET,
