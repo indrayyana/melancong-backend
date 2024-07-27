@@ -43,4 +43,5 @@ app.listen(PORT, config.app.host, () => {
   console.log(`App listening on http://${config.app.host}:${config.app.port}`);
 });
 
-export const api = region('asia-southeast2').https.onRequest(app);
+// for deploy to firebase functions
+// export const api = region('asia-southeast2').https.onRequest(app);
