@@ -12,7 +12,7 @@
 |   /users/update               |   PUT  |`Anything you want to edit from:` name, gender, phone                           | Edit profile from user                            |  &#9745;  |
 |   /users/delete               | DELETE |                                   -                                            | Delete profile from user                          |  &#9745;  |
 |   /users/upload-image         |  POST  |                                image                                           | Upload profile image from user                    |  &#9745;  |
-|   /destinations               |   GET  |                                   -                                            | Show all destinations                             |  &#9745;  |
+|   /destinations               |   GET  |                                   -                                            | Show all destinations                             |  &#9744;  |
 |/destinations/detail/`{dataId}`|   GET  |                                   -                                            | Show the detail destinations                      |  &#9745;  |
 |   /destinations/saved         |   GET  |                                   -                                            | Show all saved destinations                       |  &#9745;  |
 |   /destinations/add           |  POST  |                                  id                                            | Add destination to saved                          |  &#9745;  |
