@@ -2,14 +2,20 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import httpStatus from 'http-status';
-import { region } from 'firebase-functions';
+import * as functions from 'firebase-functions';
 import config from './utils/config.js';
+import logger from './config/logger.js';
+import * as morgan from './config/morgan.js';
 import routes from './routes/index.js';
 import ApiError from './utils/ApiError.js';
 import { errorHandler } from './middlewares/error.js';
 import { rateLimiter } from './middlewares/rateLimiter.js';
 
 const app = express();
+
+// logging
+app.use(morgan.successHandler);
+app.use(morgan.errorHandler);
 
 // set security HTTP headers
 app.use(helmet());
@@ -40,8 +46,8 @@ app.use(errorHandler);
 
 const PORT = config.app.port || 3000;
 app.listen(PORT, config.app.host, () => {
-  console.log(`App listening on http://${config.app.host}:${config.app.port}`);
+  logger.info(`App listening on http://${config.app.host}:${config.app.port}`);
 });
 
 // for deploy to firebase functions
-// export const api = region('asia-southeast2').https.onRequest(app);
+// export const api = functions.region('asia-southeast2').https.onRequest(app);

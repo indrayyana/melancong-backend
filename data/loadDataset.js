@@ -1,9 +1,11 @@
 /* eslint-disable dot-notation */
+/* eslint-disable no-unused-vars */
 
 import path from 'path';
 import fs from 'fs';
 import csv from 'csv-parser';
 import { fileURLToPath } from 'url';
+import logger from '../src/config/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,9 +32,9 @@ const loadDataset = async () => {
 (async () => {
   try {
     await loadDataset();
-    console.log('CSV file successfully processed');
+    logger.info('CSV file successfully processed');
   } catch (error) {
-    console.error('Error loading initial dataset:', error);
+    logger.error('Error loading initial dataset:', error);
   }
 })();
 
