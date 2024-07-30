@@ -2,9 +2,20 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable no-restricted-syntax */
 import { VertexAI } from '@google-cloud/vertexai';
+import config from '../utils/config.js';
 
 // Initialize Vertex with your Cloud project and location
-const vertexAi = new VertexAI({ project: 'melanc0ng', location: 'asia-southeast1' });
+const vertexAi = new VertexAI({
+  project: 'melanc0ng',
+  location: 'asia-southeast1',
+  googleAuthOptions: {
+    credentials: {
+      client_email: config.firebase.clientEmail,
+      private_key: config.firebase.privateKey.replace(/\\n/g, '\n'),
+    },
+  },
+});
+
 const model = 'gemini-1.5-flash-001';
 
 // Instantiate the models
