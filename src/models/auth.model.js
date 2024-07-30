@@ -54,6 +54,9 @@ export const userLogin = async (data) => {
     if (error.code === 'auth/network-request-failed') {
       throw new Error('Network error - please check your connection and try again.');
     }
+    if (error.code === 'auth/too-many-requests') {
+      throw new Error('Too many failed login attempts. Please try again later.');
+    }
 
     throw error;
   }
