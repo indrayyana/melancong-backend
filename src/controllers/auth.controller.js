@@ -116,3 +116,21 @@ export const resetPassword = async (req, res) => {
     });
   }
 };
+
+export const tokenValidation = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = await jwt.verify(token, config.jwt.secret);
+    const valid = await tokenModel.isTokenValid(decoded.id, token);
+
+    return res.status(httpStatus.OK).send({
+      status: httpStatus.OK,
+      valid,
+    });
+  } catch (error) {
+    return res.status(httpStatus.UNAUTHORIZED).send({
+      status: httpStatus.UNAUTHORIZED,
+      valid: false,
+    });
+  }
+};
