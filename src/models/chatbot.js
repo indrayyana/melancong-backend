@@ -1,82 +1,46 @@
-/* eslint-disable quote-props */
-/* eslint-disable object-shorthand */
-/* eslint-disable no-restricted-syntax */
-import { VertexAI } from '@google-cloud/vertexai';
+/* eslint-disable no-useless-escape */
+
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import config from '../utils/config.js';
 
-// Initialize Vertex with your Cloud project and location
-const vertexAi = new VertexAI({
-  project: 'melanc0ng',
-  location: 'asia-southeast1',
-  googleAuthOptions: {
-    credentials: {
-      client_email: config.firebase.clientEmail,
-      private_key: config.firebase.privateKey.replace(/\\n/g, '\n'),
-    },
-  },
+const genAI = new GoogleGenerativeAI(config.gemini.apiKey);
+
+const model = genAI.getGenerativeModel({
+  model: 'gemini-1.5-flash',
+  generationConfig: { maxOutputTokens: 500 },
 });
 
-const model = 'gemini-1.5-flash-001';
-
-// Instantiate the models
-const generativeModel = vertexAi.preview.getGenerativeModel({
-  model: model,
-  generationConfig: {
-    'maxOutputTokens': 8192,
-    'temperature': 1,
-    'topP': 0.95,
+let chatHistory = [
+  {
+    role: 'user',
+    parts: [{ text: 'You are a chatbot for Melancong, a website offering travel tips and information about Bali. Provide specific and detailed travel tips based on the next question. Offer recommendations on cultural experiences, local cuisine, and practical travel tips. Ensure your suggestions are easy to understand and practical for travelers. Write in a structured paragraph format and avoid mentioning specific tourist destinations, especially Ulun Danu Beratan Temple. Do not respond to questions unrelated to travel tips or information about Bali, such as questions about coding or other unrelated topics.' }],
+  }, {
+    role: 'model',
+    parts: [{ text: 'Of course' }],
   },
-  safetySettings: [
-    {
-      'category': 'HARM_CATEGORY_HATE_SPEECH',
-      'threshold': 'BLOCK_MEDIUM_AND_ABOVE',
-    },
-    {
-      'category': 'HARM_CATEGORY_DANGEROUS_CONTENT',
-      'threshold': 'BLOCK_MEDIUM_AND_ABOVE',
-    },
-    {
-      'category': 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-      'threshold': 'BLOCK_MEDIUM_AND_ABOVE',
-    },
-    {
-      'category': 'HARM_CATEGORY_HARASSMENT',
-      'threshold': 'BLOCK_MEDIUM_AND_ABOVE',
-    },
-  ],
-});
+];
 
 export const giveRecommend = async (prompt) => {
-  const text1 = {
-    text: `You are a chatbot for a website offering travel tips and information about Bali. Provide specific and detailed travel tips based on the user's query.
+  const chat = model.startChat({ history: chatHistory });
 
-    User's query: ${prompt}
+  const result = await chat.sendMessage(prompt);
 
-    Offer recommendations on cultural experiences, local cuisine, and travel tips. Ensure your suggestions are easy to understand and practical for travelers. Write in a structured paragraph format without mentioning specific tourist destinations, especially Ulun Danu Beratan Temple`,
-  };
-
-  const req = {
-    contents: [{ role: 'user', parts: [text1] }],
-  };
-
-  const streamingResp = await generativeModel.generateContentStream(req);
-  let aggregatedResponse = '';
-
-  for await (const item of streamingResp.stream) {
-    if (item.candidates && item.candidates.length > 0) {
-      aggregatedResponse += item.candidates[0].content.parts[0].text;
-    }
-  }
+  chatHistory = [
+    ...chatHistory,
+    { role: 'user', parts: [{ text: prompt }] },
+    { role: 'model', parts: [{ text: result.response.text() }] },
+  ];
 
   // Clean the response
-  const cleanResponse = aggregatedResponse
-    // .replace(/\\n/g, ' ') // Replace \n with space
+  const cleanResponse = result.response
+    .text()
+    .replace(/\\n/g, ' ') // Replace \n with space
     .replace(/\*\*/g, '') // Remove **
     .replace(/\*/g, '') // Remove *
-    // .replace(/\\\"/g, '\"') // Replace escaped quotes
-    // .replace(/\n/g, ' ') // Replace actual newlines with space
-    // .replace(/\s\s+/g, ' ') // Replace multiple spaces with a single space
-    // .replace(/^#+\s*/, '') // Remove leading #
+    .replace(/\\\"/g, '\"') // Replace escaped quotes
+    .replace(/\n/g, ' ') // Replace actual newlines with space
+    .replace(/\s\s+/g, ' ') // Replace multiple spaces with a single space
+    .replace(/^#+\s*/, '') // Remove leading #
     .trim();
 
   return cleanResponse;

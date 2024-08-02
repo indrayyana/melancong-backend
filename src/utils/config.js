@@ -29,6 +29,9 @@ const config = {
     clientCert: process.env.CLIENT_CERT,
     universeDomain: process.env.UNIVERSE_DOMAIN,
   },
+  gemini: {
+    apiKey: process.env.GEMINI_API_KEY,
+  },
 };
 
 export default config;
