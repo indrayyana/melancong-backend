@@ -1,4 +1,4 @@
-## API URL : [https://asia-southeast2-melanc0ng.cloudfunctions.net/api](https://asia-southeast2-melanc0ng.cloudfunctions.net/api)
+## API URL : [https://melancong-be.vercel.app](https://melancong-be.vercel.app)
 ## API Endpoints
 |             Endpoint          | Method |                                      Body                                      |                     Description                   | JWT Token |
 | :---------------------------: | :----: | :----------------------------------------------------------------------------: | :-----------------------------------------------: | :-------: |
