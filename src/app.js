@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import httpStatus from 'http-status';
+import compression from 'compression';
 import * as functions from 'firebase-functions';
 import config from './utils/config.js';
 import logger from './config/logger.js';
@@ -25,6 +26,9 @@ app.use(express.json());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
+
+// gzip compression
+app.use(compression());
 
 // enable cors
 app.use(cors());
