@@ -7,7 +7,7 @@
 |   /auth/login                 |  POST  |                             email, password                                    | Login to access the feature in application        |  &#9744;  |
 |   /auth/forgot-password       |  POST  |                                email                                           | Send Forgot Password email for user               |  &#9744;  |
 |   /auth/logout                |   GET  |                                   -                                            | Logout for user                                   |  &#9745;  |
-|   /auth/token-validation     |   GET  |                                   -                                            | JWT Token Validation                              |  &#9744;  |
+|   /auth/token-validation     |   GET  |                                   -                                            | JWT Token Validation                              |  &#9745;  |
 |   /users                      |   GET  |                                   -                                            | Show all users                                    |  &#9745;  |
 |   /users/profile              |   GET  |                                   -                                            | Show the detail data from user                    |  &#9745;  |
 |   /users/update               |   PUT  |`Anything you want to edit from:` name, gender, phone                           | Edit profile from user                            |  &#9745;  |
@@ -34,7 +34,7 @@ firebase init
 npm run deploy
 ```
 
-## Deploy API to Cloud Run
+## Deploy API to Google Cloud Run
 ```console
 docker build -t gcr.io/melanc0ng/backend:tag .
 ```
@@ -42,5 +42,5 @@ docker build -t gcr.io/melanc0ng/backend:tag .
 docker push gcr.io/melanc0ng/backend:tag
 ```
 ```console
-gcloud run deploy melacong-api --image gcr.io/melanc0ng/backend:tag --platform managed
+gcloud run deploy melancong-api --image gcr.io/melanc0ng/backend:tag --platform managed
 ```
