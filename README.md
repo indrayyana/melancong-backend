@@ -23,6 +23,16 @@
 ## Firebase | Cloud Firestore
 ![Melancong_DB](https://github.com/user-attachments/assets/7f4405fc-470e-4290-8482-5caa11b6dcf6)
 
+## Running Locally
+```console
+npm install
+```
+```console
+npm run dev
+```
+> [!NOTE]
+> Open http://localhost:7777 with `Postman` or your API testing tool.
+
 ## Deploy to Firebase Functions
 ```console
 npm install -g firebase-tools

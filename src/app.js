@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 // internal server error handling
 app.use(errorHandler);
 
-const PORT = config.app.port || 3000;
+const PORT = config.app.port || 7777;
 app.listen(PORT, config.app.host, () => {
   logger.info(`App listening on http://${config.app.host}:${config.app.port}`);
 });

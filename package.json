@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "node src/app.js",
-    "start:dev": "nodemon src/app.js",
+    "dev": "nodemon src/app.js",
     "lint": "eslint .",
     "deploy": "firebase deploy --only functions"
   },
