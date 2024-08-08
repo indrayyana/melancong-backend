@@ -6,5 +6,13 @@
             "use" : "@vercel/node"
         }
     ],
-    "routes": [{ "src": "/(.*)", "dest": "src/app.js" }]
+    "routes": [
+        {
+          "src": "/(.*)",
+          "dest": "src/app.js"
+        }
+    ],
+    "env": {
+      "NODE_ENV": "production"
+    }
 }
