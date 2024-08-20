@@ -1,7 +1,6 @@
 import httpStatus from 'http-status';
 import jwt from 'jsonwebtoken';
 import config from '../utils/config.js';
-import { readSingleData } from '../models/user.model.js';
 import { isTokenValid } from '../models/token.model.js';
 
 const sendUnauthorizedResponse = (res, message) => {
@@ -27,12 +26,6 @@ const auth = async (req, res, next) => {
 
     if (!decoded.emailVerified) {
       return sendUnauthorizedResponse(res, 'Please verify your email before accessing this resource');
-    }
-
-    const currentUser = await readSingleData('users', decoded.id);
-
-    if (!currentUser) {
-      return sendUnauthorizedResponse(res, 'User has been deleted');
     }
 
     // user id, email, token
