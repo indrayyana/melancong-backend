@@ -29,6 +29,10 @@ const config = {
     clientCert: process.env.CLIENT_CERT,
     universeDomain: process.env.UNIVERSE_DOMAIN,
   },
+  oauth: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  },
   gemini: {
     apiKey: process.env.GEMINI_API_KEY,
   },

@@ -11,5 +11,7 @@ router.post('/login', validate(authValidation.userLogin), authController.login);
 router.post('/forgot-password', validate(authValidation.userResetPassword), authController.resetPassword);
 router.get('/logout', auth, authController.logout);
 router.get('/token-validation', authController.tokenValidation);
+router.get('/google', authController.redirectGoogleLogin);
+router.get('/google-callback', authController.loginWithGoogle);
 
 export default router;

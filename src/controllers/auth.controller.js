@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import jwt from 'jsonwebtoken';
 import config from '../utils/config.js';
 import { tokenModel, userModel, authModel } from '../models/index.js';
+import { authorizationUrl, oauth2Client, google } from '../config/oauth.js';
 
 const signToken = async (id, name, email, emailVerified) => {
   const token = jwt.sign({
@@ -133,4 +134,50 @@ export const tokenValidation = async (req, res) => {
       valid: false,
     });
   }
+};
+
+export const redirectGoogleLogin = async (req, res) => {
+  return res.redirect(authorizationUrl);
+};
+
+export const loginWithGoogle = async (req, res) => {
+  const { tokens } = await oauth2Client.getToken(req.query.code.toString());
+
+  oauth2Client.setCredentials(tokens);
+
+  const { data } = await google.oauth2({ auth: oauth2Client, version: 'v2' }).userinfo.get();
+
+  if (!data.email || !data.name) {
+    return res.status(httpStatus.BAD_REQUEST).send({
+      status: httpStatus.BAD_REQUEST,
+      message: 'Google login failed',
+    });
+  }
+
+  let user = await userModel.findDataByEmail(data.email);
+  let userId;
+
+  if (!user) {
+    const saveUser = {
+      email: data.email,
+      name: data.name,
+    };
+
+    user = await userModel.createData('users', saveUser);
+    userId = user.id;
+  } else {
+    userId = user.id;
+  }
+
+  const token = await signToken(userId, data.name, data.email, data.verified_email);
+
+  return res.status(httpStatus.OK).send({
+    status: httpStatus.OK,
+    message: 'Login Successfully',
+    data: {
+      name: data.name,
+      emailVerified: data.verified_email,
+      token,
+    },
+  });
 };
