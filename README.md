@@ -5,9 +5,10 @@
 |   /                           |   GET  |                                   -                                            | Accessing our root endpoints                      |  &#9744;  |
 |   /auth/register              |  POST  |                           email, password, name                                | Register account for new user                     |  &#9744;  |
 |   /auth/login                 |  POST  |                             email, password                                    | Login to access the feature in application        |  &#9744;  |
+|   /auth/google                |   GET  |                                   -                                            | Login with Google Account                         |  &#9744;  |
 |   /auth/forgot-password       |  POST  |                                email                                           | Send Forgot Password email for user               |  &#9744;  |
 |   /auth/logout                |   GET  |                                   -                                            | Logout for user                                   |  &#9745;  |
-|   /auth/token-validation     |   GET  |                                   -                                            | JWT Token Validation                              |  &#9745;  |
+|   /auth/token-validation      |   GET  |                                   -                                            | JWT Token Validation                              |  &#9745;  |
 |   /users                      |   GET  |                                   -                                            | Show all users                                    |  &#9745;  |
 |   /users/profile              |   GET  |                                   -                                            | Show the detail data from user                    |  &#9745;  |
 |   /users/update               |   PUT  |`Anything you want to edit from:` name, gender, phone                           | Edit profile from user                            |  &#9745;  |
