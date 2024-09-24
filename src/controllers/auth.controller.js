@@ -163,21 +163,13 @@ export const loginWithGoogle = async (req, res) => {
       name: data.name,
     };
 
-    user = await userModel.createData('users', saveUser);
-    userId = user.id;
+    userId = await userModel.createData('users', saveUser);
   } else {
     userId = user.id;
   }
 
   const token = await signToken(userId, data.name, data.email, data.verified_email);
 
-  return res.status(httpStatus.OK).send({
-    status: httpStatus.OK,
-    message: 'Login Successfully',
-    data: {
-      name: data.name,
-      emailVerified: data.verified_email,
-      token,
-    },
-  });
+  // TODO: replace this url with the link to the oauth google success page of your front-end app
+  return res.redirect(`https://melancong-fe.vercel.app/google?token=${token}`)
 };
